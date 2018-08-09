@@ -33,6 +33,7 @@ public class HiveController {
                 sb.append("\n");
             }
             rs.close();
+            return sb.toString();
         } catch (SQLException e) {
             e.printStackTrace();
         }
