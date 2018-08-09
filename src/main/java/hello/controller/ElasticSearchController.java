@@ -1,5 +1,6 @@
 package hello.controller;
 
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,10 @@ public class ElasticSearchController {
     private TransportClient esClient;
 
     @RequestMapping("/es")
-    public String index(String index, String type, String key) {
-        return null;
+    public GetResponse index(String index, String type, String id) {
+        GetResponse response = esClient.prepareGet(index, type, id)
+                .setOperationThreaded(false)
+                .get();
+        return response;
     }
 }
