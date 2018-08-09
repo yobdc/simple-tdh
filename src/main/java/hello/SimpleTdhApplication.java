@@ -7,16 +7,27 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 import javax.annotation.PreDestroy;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 @SpringBootApplication
 public class SimpleTdhApplication extends SpringBootServletInitializer {
     @Autowired
     private TransportClient esClient;
+    @Autowired
+    private Connection inceptorConn;
 
     @PreDestroy
     public void tearDown() {
         if (esClient != null) {
             esClient.close();
+        }
+        if (inceptorConn != null) {
+            try {
+                inceptorConn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
