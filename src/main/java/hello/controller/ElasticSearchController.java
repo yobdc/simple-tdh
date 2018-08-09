@@ -16,11 +16,11 @@ public class ElasticSearchController {
     private TransportClient esClient;
 
     @RequestMapping("/es")
-    public GetResponse index(String index, String type, String id) {
+    public String index(String index, String type, String id) {
         GetResponse response = esClient.prepareGet(index, type, id)
                 .setOperationThreaded(false)
                 .get();
-        return response;
+        return response.toString();
     }
 
     @RequestMapping("/es/search")
