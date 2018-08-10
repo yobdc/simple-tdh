@@ -57,6 +57,7 @@
             <groupId>io.transwarp</groupId>
             <artifactId>inceptor-sdk</artifactId>
             <version>4.7.0</version>
+			<scope>system</scope>
             <systemPath>${project.basedir}/libs/inceptor-sdk-4.7.0.jar</systemPath>
         </dependency>
 
