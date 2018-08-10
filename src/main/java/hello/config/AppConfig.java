@@ -3,7 +3,7 @@ package hello.config;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -72,7 +72,7 @@ public class AppConfig {
             client = new PreBuiltTransportClient(Settings.EMPTY);
             for (Map.Entry<String, Integer> entry : result.entrySet()) {
                 try {
-                    client.addTransportAddress(new InetSocketTransportAddress(
+                    client.addTransportAddress(new TransportAddress(
                             InetAddress.getByName(entry.getKey()),
                             entry.getValue()
                     ));

@@ -18,7 +18,7 @@ public class ElasticSearchController {
     @RequestMapping("/es")
     public String index(String index, String type, String id) {
         GetResponse response = esClient.prepareGet(index, type, id)
-                .setOperationThreaded(false)
+//                .setOperationThreaded(false)
                 .get();
         return response.toString();
     }
