@@ -12,19 +12,19 @@ import java.sql.SQLException;
 
 @SpringBootApplication
 public class SimpleTdhApplication extends SpringBootServletInitializer {
-    @Autowired
+    @Autowired(required = false)
     private TransportClient esClient;
-    @Autowired
-    private Connection inceptorConn;
+    @Autowired(required = false)
+    private Connection hiveConn;
 
     @PreDestroy
     public void tearDown() {
         if (esClient != null) {
             esClient.close();
         }
-        if (inceptorConn != null) {
+        if (hiveConn != null) {
             try {
-                inceptorConn.close();
+                hiveConn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @RestController
 public class HbaseController {
-    @Autowired
+    @Autowired(required = false)
     private Configuration conf;
 
     @RequestMapping("/hbase")

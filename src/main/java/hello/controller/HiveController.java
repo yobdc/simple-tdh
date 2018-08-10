@@ -9,7 +9,7 @@ import java.sql.*;
 @RestController
 public class HiveController {
 
-    @Autowired
+    @Autowired(required = false)
     private Connection hiveConn;
 
     @RequestMapping("/hive")

@@ -37,13 +37,14 @@ public class AppConfig {
     /**
      * hive properties
      */
-
     @Value("${hive.url}")
     private String hiveUrl;
     @Value("${hive.user}")
     private String hiveUser;
     @Value("${hive.password}")
     private String hivePassword;
+    @Value("${hive.driver}")
+    private String hiveDriver;
 
     @Bean
     public org.apache.hadoop.conf.Configuration hbaseConf() {
@@ -88,6 +89,8 @@ public class AppConfig {
     @Bean
     public Connection hiveConn() {
         try {
+            Class.forName(hiveDriver);
+            Class.forName("org.apache.hive.jdbc.HiveDriver");
             Connection conn = DriverManager.getConnection(
                     hiveUrl,
                     hiveUser,
@@ -95,6 +98,8 @@ public class AppConfig {
             );
             return conn;
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;
