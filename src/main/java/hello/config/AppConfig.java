@@ -3,6 +3,7 @@ package hello.config;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,7 +60,7 @@ public class AppConfig {
     public TransportClient esClient() {
         TransportClient client = null;
         try {
-            Map<String, Integer> result = new HashMap<>();
+            Map<String, Integer> result = new HashMap<String, Integer>();
             String[] addrArray = esAddresses.split(",");
             for (int i = 0; i < addrArray.length; i++) {
                 String[] addrWithPort = addrArray[i].split(":");
@@ -72,7 +73,7 @@ public class AppConfig {
             client = new PreBuiltTransportClient(Settings.EMPTY);
             for (Map.Entry<String, Integer> entry : result.entrySet()) {
                 try {
-                    client.addTransportAddress(new TransportAddress(
+                    client.addTransportAddress(new InetSocketTransportAddress(
                             InetAddress.getByName(entry.getKey()),
                             entry.getValue()
                     ));
@@ -90,7 +91,6 @@ public class AppConfig {
     public Connection hiveConn() {
         try {
             Class.forName(hiveDriver);
-            Class.forName("org.apache.hive.jdbc.HiveDriver");
             Connection conn = DriverManager.getConnection(
                     hiveUrl,
                     hiveUser,
